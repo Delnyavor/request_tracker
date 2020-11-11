@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:request_tracker/controller/form_controller.dart';
 import 'package:request_tracker/models/request_model.dart';
 
 class SubmissionPage extends StatefulWidget {
+  final List<Request> requests;
+
+  const SubmissionPage({Key key, this.requests}) : super(key: key);
+
   @override
   _SubmissionPageState createState() => _SubmissionPageState();
 }
@@ -23,9 +26,6 @@ class _SubmissionPageState extends State<SubmissionPage>
   @override
   void initState() {
     super.initState();
-    requests = conferDates(
-      FormController.data.reversed.map((e) => Request.fromMap(e)).toList(),
-    );
   }
 
   void submitToDb() async {
@@ -76,8 +76,8 @@ class DataPack {
 
 int writeData(DataPack pack) {
   try {
-    pack.requests
-        .forEach((request) async => await pack.reference.add(request.toJson()));
+    // pack.requests
+    //     .forEach((request) async => await pack.reference.add(request.toJson()));
     return 1;
   } catch (e) {
     return 0;

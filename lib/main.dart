@@ -9,10 +9,10 @@ import 'models/request_model.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MyApp());
+  runApp(RequestTracker());
 }
 
-class MyApp extends StatelessWidget {
+class RequestTracker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,21 +24,17 @@ class MyApp extends StatelessWidget {
         //     subtitle1: TextStyle(fontSize: 14)),
         // fontFamily: GoogleFonts.sourceSansPro().fontFamily),
       ),
-      home: MyHomePage(title: 'Flutter Google Sheet Demo'),
+      home: Landing(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
+class Landing extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  LandingState createState() => LandingState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class LandingState extends State<Landing> {
   List<Request> data;
 
   @override
@@ -78,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => HomePage(
+                      builder: (context) => SubmissionPage(
                         requests: data,
                       ),
                     ),
