@@ -69,18 +69,33 @@ class LandingState extends State<Landing> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             return Center(
-              child: FlatButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SubmissionPage(
-                        requests: data,
-                      ),
-                    ),
-                  );
-                },
-                child: Text('Click'),
+              child: Column(
+                children: [
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SubmissionPage(),
+                        ),
+                      );
+                    },
+                    child: Text('Click'),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(
+                            requests: data,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text('Click'),
+                  ),
+                ],
               ),
             );
           } else
