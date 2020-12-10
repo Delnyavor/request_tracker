@@ -25,33 +25,38 @@ class _RequestsPageState extends State<RequestsPage>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Flexible(
-          child: Stack(
-            children: [
-              ListView.builder(
-                  itemCount: items.length,
-                  itemBuilder: (context, index) =>
-                      listItem(items[index], index)),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: FadeTransition(
-                  opacity: animation,
-                  child: Text(
-                    errorText,
-                    style: TextStyle(
-                        color: Colors.redAccent.shade400,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1),
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Column(
+          children: [
+            Flexible(
+              child: Stack(
+                children: [
+                  ListView.builder(
+                      itemCount: items.length,
+                      itemBuilder: (context, index) =>
+                          listItem(items[index], index)),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: FadeTransition(
+                      opacity: animation,
+                      child: Text(
+                        errorText,
+                        style: TextStyle(
+                            color: Colors.redAccent.shade400,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+            inputField()
+          ],
         ),
-        inputField()
-      ],
+      ),
     );
   }
 
