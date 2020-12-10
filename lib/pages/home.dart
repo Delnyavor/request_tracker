@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:request_tracker/models/request_model.dart';
 import 'package:request_tracker/pages/new_requests.dart';
+import 'package:request_tracker/widgets/search_bar.dart';
 
 class HomePage extends StatefulWidget {
   final List<Request> requests;
@@ -16,97 +17,112 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<Widget> pages = <Widget>[];
 
   int currentPage = 0;
-  double deviceWidth;
+  double deviceWidth = 0;
 
-  Animation<Offset> animation;
+  Animation<Offset> animation, secondAnimation;
   AnimationController controller;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     deviceWidth = MediaQuery.of(context).size.width;
-
-    animation = Tween<Offset>(begin: Offset(0, 0), end: Offset(-deviceWidth, 0))
+    animation = Tween<Offset>(begin: Offset(0, 0), end: Offset(-1, 0))
         .animate(controller);
-    controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
 
-    pages = [
-      RequestsListPage(widget.requests),
-      Transform.translate(offset: Offset(deviceWidth, 0), child: RequestsPage())
-    ];
+    secondAnimation = Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0))
+        .animate(controller);
   }
 
   @override
   void initState() {
     super.initState();
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300))
+          ..addListener(() {
+            if (animation.isCompleted) print('completed');
+          });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color(0xff6898ff),
+      backgroundColor: Colors.deepPurple,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         automaticallyImplyLeading: false,
       ),
-      body: pages[currentPage],
+      body: pageContainer(),
       bottomNavigationBar: bottomAppBar(),
     );
   }
 
   Widget pageContainer() {
     return AnimatedBuilder(
-      animation: controller,
-      builder: (context, child) => Stack(
+      animation: animation,
+      builder: (context, child) => child,
+      child: Stack(
         children: [
           SlideTransition(
             position: animation,
-            child: pages[0],
+            child: SearchWidget(),
           ),
           SlideTransition(
-            position: animation,
-            child: pages[1],
-          )
+            position: secondAnimation,
+            child: RequestsPage(),
+          ),
         ],
       ),
     );
   }
 
   Widget bottomAppBar() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 0.0),
-      child: BottomNavigationBar(
-        currentIndex: currentPage,
-        backgroundColor: Colors.transparent,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        elevation: 0,
-        iconSize: 22,
-        // selectedIconTheme: IconThemeData(size: 22),
-        selectedItemColor: Color(0xff5888ef),
-        unselectedItemColor: Colors.black45,
-        // unselectedLabelStyle: TextStyle(
-        //     fontSize: 14, fontWeight: FontWeight.w600, letterSpacing: 0.2),
-        // selectedLabelStyle: TextStyle(
-        //     fontSize: 14, fontWeight: FontWeight.w600, letterSpacing: 0.2),
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.all_inbox_rounded), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.swap_calls_outlined), label: 'Home'),
-        ],
-        onTap: (int index) {
-          index == 1 ? controller.forward() : controller.reverse();
-        },
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 28.0),
+          child: SizedBox.fromSize(
+            size: Size.fromHeight(1.5),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.white12,
+                ),
+              ),
+            ),
+          ),
+        ),
+        BottomNavigationBar(
+          currentIndex: currentPage,
+          backgroundColor: Colors.transparent,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          elevation: 0,
+          iconSize: 22,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white54,
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.all_inbox_rounded), label: 'Home'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.swap_calls_outlined), label: 'Home'),
+          ],
+          onTap: (int index) {
+            setState(() {
+              currentPage = index;
+            });
+            index == 1 ? controller.forward() : controller.reverse();
+          },
+        ),
+      ],
     );
-  }
-
-  pagesHandler(int index) {
-    //TODO: on call, run the animation
-    //run the animation and swap pages halfway through
   }
 }
 

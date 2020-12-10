@@ -70,6 +70,7 @@ class LandingState extends State<Landing> {
           if (snapshot.connectionState == ConnectionState.done) {
             return Center(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   FlatButton(
                     onPressed: () {
@@ -80,7 +81,7 @@ class LandingState extends State<Landing> {
                         ),
                       );
                     },
-                    child: Text('Click'),
+                    child: Text('Submission Page'),
                   ),
                   FlatButton(
                     onPressed: () {
@@ -93,7 +94,7 @@ class LandingState extends State<Landing> {
                         ),
                       );
                     },
-                    child: Text('Click'),
+                    child: Text('Home Page'),
                   ),
                 ],
               ),
