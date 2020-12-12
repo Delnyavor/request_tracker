@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:request_tracker/controller/controller.dart' as ctrl;
 import 'package:request_tracker/pages/data_upload.dart';
+import 'package:request_tracker/pages/form_page.dart';
 import 'package:request_tracker/pages/home.dart';
+import 'package:request_tracker/pages/results.dart';
 
 import 'controller/form_controller.dart';
 import 'models/request_model.dart';
@@ -47,6 +50,8 @@ class LandingState extends State<Landing> {
           .toList(),
     );
     data.removeAt(0);
+
+    // ctrl.FormController().getFeedback();
   }
 
   @override
@@ -95,6 +100,24 @@ class LandingState extends State<Landing> {
                       );
                     },
                     child: Text('Home Page'),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FormPage()),
+                      );
+                    },
+                    child: Text('Form Page'),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ResultsPage()),
+                      );
+                    },
+                    child: Text('Results'),
                   ),
                 ],
               ),

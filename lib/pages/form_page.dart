@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:request_tracker/models/request_model.dart';
+import 'package:request_tracker/controller/controller.dart';
+import 'package:request_tracker/models/feedback_form.dart';
 
 class FormPage extends StatefulWidget {
   @override
@@ -21,31 +22,32 @@ class _FormPageState extends State<FormPage> {
   TextEditingController mobileNoController = TextEditingController();
   TextEditingController feedbackController = TextEditingController();
 
+  FormController formController = FormController();
   // Method to Submit Feedback and save it in Google Sheets
   void _submitForm() {
     // Validate returns true if the form is valid, or false
     // otherwise.
     if (_formKey.currentState.validate()) {
       // If the form is valid, proceed.
-      // FeedbackForm feedbackForm = FeedbackForm(
-      //     nameController.text,
-      //     emailController.text,
-      //     mobileNoController.text,
-      //     feedbackController.text);
+      FeedbackForm feedbackForm = FeedbackForm(
+          nameController.text,
+          emailController.text,
+          mobileNoController.text,
+          feedbackController.text);
 
       _showSnackbar("Submitting Feedback");
 
       // TODO: Submit form
-      // formController.submitForm(feedbackForm, (String response) {
-      //   print("Response: $response");
-      //   if (response == FormController.STATUS_SUCCESS) {
-      //     // Feedback is saved succesfully in Google Sheets.
-      //     _showSnackbar("Feedback Submitted");
-      //   } else {
-      //     // Error Occurred while saving data in Google Sheets.
-      //     _showSnackbar("Error Occurred!");
-      //   }
-      // });
+      formController.submitForm(feedbackForm, (String response) {
+        print("Response: $response");
+        if (response == FormController.STATUS_SUCCESS) {
+          // Feedback is saved succesfully in Google Sheets.
+          _showSnackbar("Feedback Submitted");
+        } else {
+          // Error Occurred while saving data in Google Sheets.
+          _showSnackbar("Error Occurred!");
+        }
+      });
     }
   }
 
@@ -133,6 +135,4 @@ class _FormPageState extends State<FormPage> {
       ),
     );
   }
-
-  FormController() {}
 }
