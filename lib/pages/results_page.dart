@@ -16,7 +16,11 @@ class _ResultsPageState extends State<ResultsPage> {
   void initState() {
     super.initState();
 
-    FormController().getFeedbackList().then((feedbackItems) {
+    FormController()
+        .getFeedbackList(
+            GetterParams(id: 'shsy', type: FormController.FIND_ALL_BY_ID))
+        .then((feedbackItems) {
+      feedbackItems.removeAt(0);
       setState(() {
         this.feedbackItems = feedbackItems;
       });
@@ -35,7 +39,7 @@ class _ResultsPageState extends State<ResultsPage> {
                 Icon(Icons.person),
                 Expanded(
                   child: Text(
-                      "${feedbackItems[index].name} (${feedbackItems[index].email})"),
+                      "${feedbackItems[index].name} (${feedbackItems[index].email}), ${feedbackItems[index].mobileNo}"),
                 )
               ],
             ),
