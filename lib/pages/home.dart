@@ -53,11 +53,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.deepPurple,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-      ),
+      // appBar: ,
       body: pageContainer(),
       bottomNavigationBar: bottomAppBar(),
     );
@@ -87,18 +83,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28.0),
-          child: SizedBox.fromSize(
-            size: Size.fromHeight(1.5),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.white12,
-                ),
-              ),
-            ),
-          ),
-        ),
+            padding: const EdgeInsets.symmetric(horizontal: 22.0),
+            child: Divider(
+              height: 1,
+              thickness: 0,
+              color: Colors.white12,
+            )),
         BottomNavigationBar(
           currentIndex: currentPage,
           backgroundColor: Colors.transparent,

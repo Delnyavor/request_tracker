@@ -29,31 +29,29 @@ class _ResultsPageState extends State<ResultsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.builder(
-        itemCount: feedbackItems.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Row(
-              children: <Widget>[
-                Icon(Icons.person),
-                Expanded(
-                  child: Text(
-                      "${feedbackItems[index].name} (${feedbackItems[index].email}), ${feedbackItems[index].mobileNo}"),
-                )
-              ],
-            ),
-            subtitle: Row(
-              children: <Widget>[
-                Icon(Icons.message),
-                Expanded(
-                  child: Text(feedbackItems[index].feedback),
-                )
-              ],
-            ),
-          );
-        },
-      ),
+    return ListView.builder(
+      itemCount: feedbackItems.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Row(
+            children: <Widget>[
+              Icon(Icons.person),
+              Expanded(
+                child: Text(
+                    "${feedbackItems[index].name} (${feedbackItems[index].email}), ${feedbackItems[index].mobileNo}"),
+              )
+            ],
+          ),
+          subtitle: Row(
+            children: <Widget>[
+              Icon(Icons.message),
+              Expanded(
+                child: Text(feedbackItems[index].feedback),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }

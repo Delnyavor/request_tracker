@@ -6,7 +6,7 @@ import 'package:request_tracker/pages/results_page.dart';
 
 import 'controller/form_controller.dart';
 import 'models/request_model.dart';
-import 'pages/data_upload.dart';
+import 'models/data_upload.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
